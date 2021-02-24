@@ -1,0 +1,6 @@
+Species	Seq
+Cafeteria_roenbergensis	0
+Caecitellus_parvulus	0
+Nannochloropsis_gaditana_CCMP526	1
+Aureococcus_anophagefferens	1
+Heterosigma_akashiwo	1
