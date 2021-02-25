@@ -1,4 +1,6 @@
 library (ape)
 library (drake)
 library (rotl)
-library(geiger)
+library (geiger)
+library (corHMM)
+library(phangorn)
