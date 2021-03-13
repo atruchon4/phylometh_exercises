@@ -8,7 +8,13 @@ plan <- drake_plan(
   tree_print = plot_tree(cleaned.discrete$phy, file=file_out("results/trees.pdf"), anc.p, anc.ml),
   cleaned.data = cleaned.discrete$data,
   names = rownames(cleaned.data),
+<<<<<<< HEAD
   rownames(cleaned.data) <- NULL,
   cleaned.data.1 = cbind(names, cleaned.data),
   p = corHMM(phy = cleaned.discrete$phy, data = cleaned.data.1, rate.cat = 1)
+=======
+  rownames(cleaned.data) = NULL,
+  cleaned.data = cbind(names, cleaned.data),
+  corHMM(phy = cleaned.discrete$phy, data = cleaned.data, rate.cat = 1)
+>>>>>>> 36b84978e9708f49fedc8d1d324bd090e0d86564
 )
