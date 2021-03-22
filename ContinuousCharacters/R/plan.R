@@ -12,5 +12,15 @@ plan <- drake_plan(
   ou.tree <- rescale(cleaned.cont$phy, model="OU", 5),
   plot(ou.tree),
   AIC.BM1 = BM1$opt$aic,
-  AIC.OU1 = OU1$opt$aic
+  AIC.OU1 = OU1$opt$aic,
+  delta.AIC.BM1 = AIC.BM1 - AIC.OU1,
+  delta.AIC.OU1 = AIC.OU1 - AIC.BM1,
+  print(paste("BM1 has an AIC of", AIC.BM1, ", OU1 has an AIC of", AIC.OU1, "making the delta AIC between the two models", delta.AIC.OU1)),
+  discrete = read.table(file= "photosynthetic_2.txt", stringsAsFactors = FALSE, row.names = 1, header = TRUE),
+  cleaned.discrete = CleanData(cleaned.cont$phy, discrete),
+  reconstruction.info = ace(cleaned.discrete$data, cleaned.discrete$phy, type="discrete", method="ML", CI=TRUE),
+  best.states = colnames(reconstruction.info$lik.anc)[apply(reconstruction.info$lik.anc, 1, which.max)],
+  species = row.names(cleaned.cont$data),
+  df = data.frame(species, best.states)
+  
 )
