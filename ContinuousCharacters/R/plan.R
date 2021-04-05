@@ -10,7 +10,7 @@ plan <- drake_plan(
   par(mfcol = (c(1,2))),
   plot(cleaned.cont$phy, cex = 0.5),
   ou.tree <- rescale(cleaned.cont$phy, model="OU", 5),
-  plot(ou.tree),
+  plot(ou.tree, cex = 0.5),
   AIC.BM1 = BM1$opt$aic,
   AIC.OU1 = OU1$opt$aic,
   delta.AIC.BM1 = AIC.BM1 - AIC.OU1,
@@ -21,6 +21,6 @@ plan <- drake_plan(
   reconstruction.info = ace(cleaned.discrete$data, cleaned.discrete$phy, type="discrete", method="ML", CI=TRUE),
   best.states = colnames(reconstruction.info$lik.anc)[apply(reconstruction.info$lik.anc, 1, which.max)],
   species = row.names(cleaned.cont$data),
-  df = data.frame(species, best.states)
+  df = data.frame(species, cleaned.discrete$data[,1], cleaned.cont$data[,1]),
   
 )
