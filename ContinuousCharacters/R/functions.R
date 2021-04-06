@@ -40,3 +40,8 @@ GetTreeWithNameProcessing <- function(treefile) {
   raw2 <- paste(asplit[[1]][1], asplit[[1]][2], sep = " ")
   phy <- ape::read.tree(text=raw2)
 }
+
+RowNamesFun <- function(x, y, z) {
+  data.range <- cbind(range <- x[,y])
+  row.names(data.range) <- x[,z]
+}
