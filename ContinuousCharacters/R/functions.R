@@ -40,3 +40,9 @@ GetTreeWithNameProcessing <- function(treefile) {
   raw2 <- paste(asplit[[1]][1], asplit[[1]][2], sep = " ")
   phy <- ape::read.tree(text=raw2)
 }
+
+RunSingleOUwieModel <- function(model, phy, data)
+{
+  nodeBased.OUMV <- OUwie(phy, data, model=model, simmap.tree=FALSE, diagn=FALSE, ub = 1000000000, root.age = max(phytools::nodeHeights(phy)))
+  return(nodeBased.OUMV)
+}

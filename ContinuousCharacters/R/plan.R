@@ -3,7 +3,7 @@ plan <- drake_plan(
   data = GetLatidunalRangesForAllSpecies(tree),
   data.no.na = na.omit(data),
   data.range = cbind(range = data.no.na[,4]),
-  row.names(data.range) = data.no.na[,1],
+  row.names(data.range) <- data.no.na[,1],
   cleaned.cont = CleanData(tree, data.range),
   BM1 = geiger::fitContinuous(cleaned.cont$phy, cleaned.cont$data, model="BM"),
   OU1 = fitContinuous(cleaned.cont$phy, cleaned.cont$data, model="OU"),
@@ -21,6 +21,13 @@ plan <- drake_plan(
   reconstruction.info = ace(cleaned.discrete$data, cleaned.discrete$phy, type="discrete", method="ML", CI=TRUE),
   best.states = colnames(reconstruction.info$lik.anc)[apply(reconstruction.info$lik.anc, 1, which.max)],
   species = row.names(cleaned.cont$data),
-  df = data.frame(species, best.states)
-  
+  df = data.frame(species, cleaned.discrete$data[ ,1],cleaned.cont$data[ ,1]),
+  cleaned.cont$phy$node.label <- best.states,
+  nodeBased.OUMV = OUwie(cleaned.cont$phy, df ,model="OUMV", simmap.tree=FALSE, diagn=FALSE, ub = 1000000000),
+  print(nodeBased.OUMV),
+  results = lapply(models, RunSingleOUwieModel, phy=cleaned.cont$phy, data=df),
+  AICc.values =sapply(results, "[[", "AICc"),
+  names(AICc.values) = models,
+  AICc.values = AICc.values-min(AICc.values),
+  best = results[[which.min(AICc.values)]], 
 )
