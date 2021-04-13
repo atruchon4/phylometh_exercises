@@ -9,7 +9,7 @@ plan <- drake_plan(
   OU1 = fitContinuous(cleaned.cont$phy, cleaned.cont$data, model="OU"),
   par(mfcol = (c(1,2))),
   plot(cleaned.cont$phy, cex = 0.5),
-  ou.tree <- rescale(cleaned.cont$phy, model="OU", 5),
+  ou.tree <- rescale(cleaned.cont$phy, model="OU", .8),
   plot(ou.tree, cex = 0.5),
   AIC.BM1 = BM1$opt$aic,
   AIC.OU1 = OU1$opt$aic,
@@ -31,4 +31,5 @@ plan <- drake_plan(
   names(AICc.values) = models,
   AICc.values = AICc.values-min(AICc.values),
   best = results[[which.min(AICc.values)]],
+  alpha.value <- seq(from=0.2, to = 0.8, length.out = 50)
 )
