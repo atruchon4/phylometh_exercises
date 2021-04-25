@@ -40,3 +40,20 @@ GetTreeWithNameProcessing <- function(treefile) {
   raw2 <- paste(asplit[[1]][1], asplit[[1]][2], sep = " ")
   phy <- ape::read.tree(text=raw2)
 }
+
+fourstate <- function(tree, trait) {
+  for(i in sequence(Ntip(tree))) {
+    if(trait[i,2]==0 && trait[i,3]==0) {
+      fourstate.trait[i]<-0
+    }
+    if(trait[i,2]==0 && trait[i,3]==1) {
+      fourstate.trait[i]<-1
+    }
+    if(trait[i,2]==1 && trait[i,3]==0) {
+      fourstate.trait[i]<-2
+    }
+    if(trait[i,2]==1 && trait[i,3]==1) {
+      fourstate.trait[i]<-3
+    }
+  }
+}

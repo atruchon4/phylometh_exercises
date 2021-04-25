@@ -41,7 +41,14 @@ GetTreeWithNameProcessing <- function(treefile) {
   phy <- ape::read.tree(text=raw2)
 }
 
+
 RowNamesFun <- function(x, y, z) {
   data.range <- cbind(range <- x[,y])
   row.names(data.range) <- x[,z]
+}
+
+RunSingleOUwieModel <- function(model, phy, data)
+{
+  nodeBased.OUMV <- OUwie(phy, data, model=model, simmap.tree=FALSE, diagn=FALSE, ub = 1000000000, root.age = max(phytools::nodeHeights(phy)))
+  return(nodeBased.OUMV)
 }
